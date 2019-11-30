@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  database:
+    image: bitnami/mariadb:10.1
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_DATABASE: "bde-api"
+      MARIADB_USER: "bde"
+      MARIADB_PASSWORD: "secret-password12345"
+      MARIADB_ROOT_PASSWORD: "secret-password678910"
+      MARIADB_ALLOW_EMPTY_PASSWORD: "yes"
+      MARIADB_PORT: "3306"
+  app:
+    image: node:10
+    build:
+      context: .
+      dockerfile: Dockerfile-app-nodejs
+    environment:
+      - DB_HOST="database"
+      - DB_USERNAME="bde"
+      - DB_DATABASE="bde-api"
+      - DB_PASSWORD="secret-password12345"
+    depends_on:
+      - database
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app:/app

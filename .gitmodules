@@ -1,0 +1,9 @@
+[submodule "bde-api"]
+	path = bde-api
+	url = https://github.com/AlexisDOUADY/bde-api
+[submodule "bde-nice-frontend"]
+	path = bde-nice-frontend
+	url = https://github.com/AlexisDOUADY/bde-nice-frontend
+[submodule "bde-nice-laravel"]
+	path = bde-nice-laravel
+	url = https://github.com/AlexisDOUADY/bde-nice-laravel

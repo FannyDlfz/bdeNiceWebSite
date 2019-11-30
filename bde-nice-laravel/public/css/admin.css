@@ -1,0 +1,203 @@
+
+/*================================================*/
+/*------------------------------------------------*/
+/*                                                */
+/*            BDE CESI NICE STYLESHEET            */
+/*                                                */
+/*------------------------------------------------*/
+/*================================================*/
+
+/*-----------------------------*/
+/*            FONTS            */
+/*-----------------------------*/
+
+@font-face
+{
+	src: url('../fonts/Lato-Light.ttf');
+	font-family: lato-light;
+}
+
+@font-face
+{
+	src: url('../fonts/Lato-Heavy.ttf');
+	font-family: lato-heavy;
+}
+
+@font-face
+{
+	src: url('../fonts/Lato-Regular.ttf');
+	font-family: lato-regular;
+}
+
+/*-----------------------------*/
+/*            BASE             */
+/*-----------------------------*/
+
+:root
+{
+    --shadow: 0px 0px 20px var(--color-shadow);
+
+    --color-shadow: #0000006E;
+}
+
+body, html { margin: 0; font-family: lato-regular; }
+body       { overflow-x: hidden; }
+
+main, .header { position: relative; left: 300px; }
+
+main, .table, .header { width: calc(100vw - 300px); margin: 0; }
+
+input::placeholder { font-family: lato-regular; color: black; }
+
+.table-top
+{
+    background-color: #E69D5C;
+    border: 2px solid #E69D5C;
+    outline: #E69D5C solid 9px;
+    color: white;
+    font-size: 20px;
+}
+
+.table-elements
+{
+    background: white;
+    border-radius: 0px 0px 17px 17px;
+    width: 65%;
+    color: black;
+    font-size: 20px;
+    box-shadow: 0px 6px 10px 5px  #888888;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 200px auto 0 auto;
+}
+
+.table th
+{
+    font-weight: normal;
+    border-collapse: collapse;
+    line-height: 70px;
+}
+
+.table-description { text-align: justify; }
+
+.table th a
+{
+    height: 100%;
+    line-height: 70px;
+}
+
+.table td { padding: 20px 10px; }
+
+.table td, .table th { margin: 25px 0; border-spacing: 0; min-width: 120px; }
+
+/*-----------------------------*/
+/*          TEMPLATES          */
+/*-----------------------------*/
+
+.orange-bar
+{
+    width: calc(100vw - 300px);
+    height:112px;
+    background:#E69D5C;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+}
+
+#inside-bar
+{
+	font-size: 33px;
+	border-radius: 19px;
+	background: #2D2D2D;
+	color: #FFFFFF;
+	height: 50px;
+	margin: 40px 30px 30px 30px;
+    line-height: 50px;
+    padding: 40px;
+}
+
+/* NAVIGATION BAR */
+
+.sidenav {
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  background-color: white;
+  padding-top: 20px;
+  box-shadow: var(--shadow);
+}
+
+.sidenav a {
+  padding: 6px 0 6px 30px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #E69D5C;
+  display: block;
+}
+
+.side-nav-title
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar
+{
+    margin: auto 50px;
+    display: flex;
+    justify-content: center;
+    float : right;
+}
+
+input.fa-search
+{
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    color: #E69D5C !important;
+    border-radius: 45px 0px 0px 45px;
+    height: 42px;
+    width: 500px;
+    padding: 0 20px;
+}
+
+/*-----------------------------*/
+/*           WIDGETS           */
+/*-----------------------------*/
+
+button.fas
+{
+  cursor: pointer;
+  border: none;
+  height: 42px;
+  width: 55px;
+  border-radius: 0px 33px 33px 0px;
+  background: white;
+  color: black;
+}
+
+.table .fa-sort
+{
+  position: relative;
+  top: 3px;
+  width: 2px;
+}
+
+.table .fa-plus-circle, .table .fa-sort
+{
+  background: none;
+  color: white;
+}
+
+.fas, .fa, .far
+{
+    cursor: pointer;
+    color: #E69D5C;
+    background: white;
+}
+
+.sidenav .fas { height: 42px; width: 55px; }

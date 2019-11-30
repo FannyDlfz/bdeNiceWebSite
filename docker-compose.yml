@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+  db-laravel:
+    image: 'bitnami/mariadb:10.1'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=my_user
+      - MARIADB_DATABASE=my_database
+      - MARIADB_PASSWORD=my_password
+  db-restapi:
+    image: bitnami/mariadb:10.1
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_DATABASE: "bde-api"
+      MARIADB_USER: "bde"
+      MARIADB_PASSWORD: "secret-password12345"
+      MARIADB_ROOT_PASSWORD: "secret-password678910"
+      MARIADB_ALLOW_EMPTY_PASSWORD: "yes"
+  laravel:
+    tty: true
+    image: bitnami/laravel:6-debian-9
+    environment:
+      - DB_HOST=db-laravel
+      - DB_USERNAME=my_user
+      - DB_DATABASE=my_database
+      - DB_PASSWORD=my_password
+    depends_on:
+      - db-laravel
+      - restapi
+    ports:
+      - 8080:3000
+    volumes:
+      - ./bde-nice-laravel/:/app
+    privileged: true
+  restapi:
+    image: node:10
+    environment:
+      - DB_HOST="bde-api"
+      - DB_USERNAME="bde"
+      - DB_DATABASE="bde-api"
+      - DB_PASSWORD="secret-password12345"
+    depends_on:
+      - db-restapi
+    ports:
+      - 3000:3000
+    volumes:
+      - ./bde-api/app:/app
