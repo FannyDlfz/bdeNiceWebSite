@@ -2,11 +2,60 @@
 
 @section('content')
 
-        <div role="main">
+
+    <div>
+        <div class="orange-bar">
+            <p id="inside-bar">Prochainement au BDE...</p>
+        </div>
+    </div>
+
+    <div role="main">
+        <div id="eventsCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+
+                @php
+                    $i = 0;
+                    //$nextMonth = mktime(0, 0, 0, date('m') + 1, date('d'), date('Y'));
+                    $nextMonth = time() + (4 * 7 * 24 * 60 * 60);
+                    $today = time();
+                @endphp
+
+                @foreach($events as $event)
+
+                    @if($event->begin_at < $nextMonth && $event->begin_at > $today)
+
+                        <div class="event-box item {{ $i == 0 ? 'active' : '' }}">
+                            <div class="event-container-container">
+                                <article class="event-container">
+                                    <div class="event-img">
+                                        <img class="image" src="{{ $event->pictures[0]->name }}" alt="{{ $event->pictures[0]->name }}" />
+                                    </div>
+                                    <p class="eventtitle">{{$event->name}}</p>
+                                    <p class="text">{{$event->description}}</p>
+                                    <p class="buttonevent">En savoir plus</p>
+                                </article>
+                                <div class="event-background">De {{$event->begin_at }} à {{$event->end_at }}</div>
+                            </div>
+                        </div>
+
+                        @php $i++ @endphp
+                    @endif
+                @endforeach
+
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ route('events.index') }}"><button class="button"><span>Intéressé par d'autres évènements ?</span></button></a>
+
+
+
+        <!--<div role="main">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-                <!-- Wrapper for slides -->
+                 Wrapper for slides
                 <div class="carousel-inner">
+
                     <div class="item active">
                         <img src="{{asset('/img/image_1.png')}}" alt="Chania">
                         <div class="carousel-caption">
@@ -32,7 +81,7 @@
                     </div>
                 </div>
 
-                <!-- Left and right controls -->
+                 Left and right controls
                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                     <span class="sr-only">Previous</span>
@@ -51,40 +100,28 @@
 
         <div role="main">
             <div id="eventsCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Wrapper for slides -->
+
                 <div class="carousel-inner">
 
                     @php $i = 0 @endphp
 
                     @foreach($events as $event)
 
-                        @if($i % 3 == 0)
-
-                            @if($i != 0)
-
-                                </div>
-
-                            @endif
-
                             <div class="event-box item {{ $i == 0 ? 'active' : '' }}">
-
-                        @endif
-
-                        <div class="event-container-container">
-                            <article class="event-container">
-                                <div class="event-img"> <img class="image"  src="{{ $event->pictures[0]->name }}" alt="{{ $event->pictures[0]->name }}" /></div>
-                                <p class="eventtitle">{{ $event->name }}</p>
-                                <p class="text">{{ $event->description }}</p>
-                                <p class="buttonevent">En savoir plus</p>
-                            </article>
-                            <div class="event-background">De {{$event->begin_at }} à {{$event->end_at }}</div>
-                        </div>
-
+                                <div class="event-container-container">
+                                    <article class="event-container">
+                                        <div class="event-img"> <img class="image"  src="{{ $event->pictures[0]->name }}" alt="{{ $event->pictures[0]->name }}" /></div>
+                                        <p class="eventtitle">{{ $event->name }}</p>
+                                        <p class="text">{{ $event->description }}</p>
+                                        <p class="buttonevent">En savoir plus</p>
+                                    </article>
+                                    <div class="event-background">De {{$event->begin_at }} à {{$event->end_at }}</div>
+                                </div>
+                            </div>
                         @php $i++ @endphp
-
                      @endforeach
-
                 </div>
+
             </div>
         </div>
 
@@ -97,7 +134,7 @@
 
        <div role="main">
             <div id="articlesCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Wrapper for slides -->
+                Wrapper for slides
                 <div class="carousel-inner">
 
                     @php $i = 0 @endphp
@@ -137,7 +174,7 @@
         <div class="wrapper-div">
             <a href="{{ route('articles.index') }}"><button class="button"><span>Intéressé par d'autres produits ?</span></button></a>
         </div>
-
+-->
 @endsection
 
 @section('scripts')

@@ -24,7 +24,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $events   = $this->eventRepository->getSelected();
+        $events   = $this->eventRepository->findAll();
         $articles = $this->articleRepository->getSelected();
 
         return view('home', compact('articles', 'events'));

@@ -29,7 +29,7 @@ Route::get('events-photos/create/{id}', 'EventPhotoController@create')->where(ar
 
 Route::resource('events',   'EventController')              ->names('events');
 Route::resource('event-categories', 'EventCatController')   ->names('eventCategories');
-Route::get('events/{id}/delete', 'EventController@destroy')->where(array('id' => '[0-9]+'))->name('events.get-delete');
+Route::get('events/{id}/delete', 'EventController@destroy')     ->where(array('id' => '[0-9]+'))->name('events.get-delete');
 
 Route::resource('articles', 'ArticleController')             ->names('articles');
 Route::get('articles/{id}/delete', 'ArticleController@destroy')->where(array('id' => '[0-9]+'))->name('articles.get-delete');

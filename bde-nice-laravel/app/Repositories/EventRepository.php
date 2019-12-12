@@ -17,4 +17,9 @@ class EventRepository extends BaseRepository {
         return Event::where('selected', 1)->get();
     }
 
+    public function findAll()
+    {
+        return Event::all();
+    }
+
 }
