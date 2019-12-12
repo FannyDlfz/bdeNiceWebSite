@@ -15,9 +15,8 @@
 
                 @php
                     $i = 0;
-                    //$nextMonth = mktime(0, 0, 0, date('m') + 1, date('d'), date('Y'));
-                    $nextMonth = time() + (4 * 7 * 24 * 60 * 60);
-                    $today = time();
+                    $nextMonth = mktime(0, 0, 0, date('Y') + 1, date('m'), date('d'));
+                    $today = date('Y-m-d');
                 @endphp
 
                 @foreach($events as $event)
@@ -32,7 +31,7 @@
                                     </div>
                                     <p class="eventtitle">{{$event->name}}</p>
                                     <p class="text">{{$event->description}}</p>
-                                    <p class="buttonevent">En savoir plus</p>
+                                    <a href="events/{{$event->id}}"><p class="buttonevent">En savoir plus</p></a>
                                 </article>
                                 <div class="event-background">De {{$event->begin_at }} à {{$event->end_at }}</div>
                             </div>
