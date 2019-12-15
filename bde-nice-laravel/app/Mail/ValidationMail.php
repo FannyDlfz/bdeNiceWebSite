@@ -14,14 +14,15 @@ class validationMail extends Mailable
     use Queueable, SerializesModels;
     protected $userRepository;
     protected $articleRepository;
+
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param ArticleRepository $articleRepository
      */
-    public function __construct(ArticleRepository $articleRepository)
+    public function __construct()
     {
-        $this->articleRepository = $articleRepository;
+        $this->articleRepository = new articleRepository;
         $this->userRepository    = new APIModelRepository('App\User', '/api/users');
     }
 

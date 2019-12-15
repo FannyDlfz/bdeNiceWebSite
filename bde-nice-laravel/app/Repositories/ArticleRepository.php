@@ -8,9 +8,9 @@ class ArticleRepository extends BaseRepository {
 
     protected $article;
 
-    public function __construct(Article $article)
+    public function __construct()
     {
-        $this->model = $article;
+        $this->model = new Article;
     }
 
     public function getSelected()
