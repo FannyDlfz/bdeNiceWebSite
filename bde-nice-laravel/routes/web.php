@@ -25,6 +25,8 @@ Route::post('users/connect', 'UserController@connect') ->name('connection');
 Route::get('articles/search', 'ArticleController@search') ->name('articles.search');
 Route::get('events/search', 'EventController@search')     ->name('events.search');
 
+Route::get('mails/validationMail', 'BasketController@submit')  ->name('mails.validationMail');
+
 Route::get('events-photos/create/{id}', 'EventPhotoController@create')->where(array('id' => '[0-9]+'))->name('events-photos.create');
 
 Route::resource('events',   'EventController')              ->names('events');
@@ -46,9 +48,9 @@ Route::get('admin/articles/list', 'AdminController@articles_list_ajax') ->name('
 Route::get('events/{id}/subscribe', 'EventController@subscribe')  ->where(array('id' => '[0-9]+'))->name('events.subscribe');
 Route::get('events/{id}/unsubscribe', 'EventController@unsubscribe')->where(array('id' => '[0-9]+'))->name('events.unsubscribe');
 
-Route::resource('basket', 'BasketController')->only(['show', 'update'])->names('basket');
+Route::resource('basket', 'BasketController')->only(['show', 'update', 'submit'])->names('basket');
 Route::delete('basket/{id}/remove-article', 'BasketController@removeArticle')->where(array('id' => '[0-9]+'))->name('basket.remove-article');
-Route::get('basket/{id}/submit', 'BasketController@submit')->where(array('id' => '[0-9]+'))->name('basket.submit');
+Route::get('basket/{id}/submit', 'BasketController@submit');/*->where(array('id' => '[0-9]+'))->name('basket.submit');*/
 Route::post('/articles/search', 'ArticleController@search');
 Route::post('/events/search', 'EventController@search');
 

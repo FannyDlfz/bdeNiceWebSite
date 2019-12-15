@@ -39,7 +39,7 @@
         </table>
     </div>
     <p>
-        <button class="button-event-basket  ">Acheter</button>
+        <a href="{{route('mails.validationMail')}}"><button class="button-event-basket  ">Acheter</button></a>
     </p>
 @endsection
 

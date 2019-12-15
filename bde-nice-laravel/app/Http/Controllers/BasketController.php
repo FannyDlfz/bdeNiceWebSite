@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\validationMail;
 use App\Repositories\APIModelRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CommandRepository;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BasketController extends Controller
 {
@@ -56,6 +59,19 @@ class BasketController extends Controller
         $this->commandRepository->destroyRelation($id, $article_id);
 
         return back();
+    }
+
+    public function submit ()
+    {
+        $utilisateurQuiCommande = auth()->user();
+        $users = $this->userRepository->findAll();
+
+        foreach ($users as $user) {
+            if ($user->role->_id == 4) {
+                Mail::to($user)->send(new validationMail);
+            }
+        }
+        return 'commande validée';
     }
 
     /*public function submit(Request $request, $id)
