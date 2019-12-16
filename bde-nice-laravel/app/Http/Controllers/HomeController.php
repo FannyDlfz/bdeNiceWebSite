@@ -27,6 +27,8 @@ class HomeController extends Controller
         $events   = $this->eventRepository->findAll();
         $articles = $this->articleRepository->getSelected();
 
-        return view('home', compact('articles', 'events'));
+        $allArticles = $this->articleRepository->sortByOrderedNumber();
+
+        return view('home', compact('articles', 'events', 'allArticles'));
     }
 }
