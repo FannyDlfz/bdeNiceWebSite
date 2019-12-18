@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\EventPhoto;
 use App\Gestion\FileUploadGestion;
 use App\Gestion\SlugGestion;
 use App\Repositories\CommentRepository;
@@ -30,7 +29,7 @@ class EventPhotoController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
         return view('eventPhotoIndex');
@@ -39,7 +38,7 @@ class EventPhotoController extends Controller {
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create($id)
     {
@@ -50,7 +49,7 @@ class EventPhotoController extends Controller {
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(EventPhotoCreateRequest $request)
     {
@@ -84,13 +83,11 @@ class EventPhotoController extends Controller {
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    //to review
     public function show($id) {
 
         $eventPhoto = $this->eventPhotoRepository->getById($id);
-        $user = new User();
         $user = $this->userRepository->find(array('id' => $eventPhoto->user_id));
         $comments = $this->commentRepository->findByEventPhotoId($id);
 
@@ -101,7 +98,7 @@ class EventPhotoController extends Controller {
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     //to review
     public function edit($id) {
@@ -128,7 +125,7 @@ class EventPhotoController extends Controller {
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id) {
 
@@ -137,6 +134,11 @@ class EventPhotoController extends Controller {
         return redirect()->back();
     }
 
+    /**
+     * Returns a zip file containing all users' images
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
     public function downloadImage()
     {
         $path = public_path('/event-photos-users');
@@ -158,7 +160,7 @@ class EventPhotoController extends Controller {
 
             return response()->download($path . '/' . $fileName)->deleteFileAfterSend();
         }
-
+        return redirect()->back();
     }
 
 }

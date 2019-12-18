@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\APIModelRepository;
-use App\Repositories\ArticleRepository;
 use App\Repositories\CommandRepository;
 use Illuminate\Http\Request;
 
@@ -22,7 +21,7 @@ class BasketController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
@@ -38,7 +37,7 @@ class BasketController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -49,6 +48,13 @@ class BasketController extends Controller
         return back();
     }
 
+    /**
+     * Remove article from the basket
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function removeArticle(Request $request, $id)
     {
         $article_id = $request->input('article_id');

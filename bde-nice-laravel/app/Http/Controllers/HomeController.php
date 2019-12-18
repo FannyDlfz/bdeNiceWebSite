@@ -3,13 +3,8 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Http\Resources\ArticleResource;
-use App\Http\Resources\EventResource;
 use App\Repositories\ArticleRepository;
-use App\Repositories\EventPhotoRepository;
 use App\Repositories\EventRepository;
-use App\Repositories\PictureRepository;
 
 class HomeController extends Controller
 {
@@ -22,6 +17,11 @@ class HomeController extends Controller
         $this->articleRepository = $articleRepository;
     }
 
+    /**
+     * Display main page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $events   = $this->eventRepository->findAll();

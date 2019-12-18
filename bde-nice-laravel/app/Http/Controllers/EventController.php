@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\Gestion\FileUploadGestion;
 use App\Gestion\SlugGestion;
-use App\Http\Middleware\Auth;
-use App\Http\Resources\EventPhotoResource;
 use App\Mail\reportMail;
 use App\Repositories\APIModelRepository;
 use App\Repositories\CommentRepository;
@@ -16,17 +14,13 @@ use App\Repositories\PictureRepository;
 use App\Repositories\EventPhotoRepository;
 
 use App\Picture;
-use App\EventPhoto;
 
 use App\Http\Requests\EventCreateRequest;
 use App\Http\Requests\EventUpdateRequest;
 
-use App\User;
 use App\Repositories\SubscriptionRepository;
-use App\Subscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller {
@@ -65,7 +59,7 @@ class EventController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -77,18 +71,36 @@ class EventController extends Controller {
         return view('events.index', compact('events','links', 'eventCategories'));
     }
 
+    /**
+     * Subscribe user to an event
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function subscribe($id)
     {
         $this->subscriptionRepository->store(array('user_id' => session('user'), 'event_id' => $id));
         return redirect('events/' . $id);
     }
 
+    /**
+     * Unsubscribe User from the event
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function unsubscribe($id)
     {
         $this->subscriptionRepository->unsubscribe(session('user'), $id);
         return redirect('events/' . $id);
     }
 
+    /**
+     * Get all Subscribed users
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getSubUsers($id) {
 
         $users = $this->userRepository->findAll();
@@ -111,7 +123,7 @@ class EventController extends Controller {
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -120,6 +132,12 @@ class EventController extends Controller {
         return view('events.creation', compact('eventCategories'));
     }
 
+    /**
+     * Search specific event with name
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
     public function search(Request $request)
     {
         $eventCategories = $this->eventCatRepository->findAll();
@@ -228,7 +246,7 @@ class EventController extends Controller {
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id) {
 
@@ -254,14 +272,13 @@ class EventController extends Controller {
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id) {
 
         //get user for name of comment
         $event = $this->eventRepository->getById($id);
         $eventCategories = $this->eventCatRepository->findAll();
-
 
         return view('events.edit', compact('event','eventCategories'));
     }
@@ -302,18 +319,21 @@ class EventController extends Controller {
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id) {
 
         $this->eventRepository->destroy($id);
-//        $this->eventRepository->destroy($id);
-//        $categories = $this->eventPhotoRepository->findByEventId($id);
-//        $this->eventCatRepository->destroyRelation($event, $categories);
 
         return redirect()->back();
     }
 
+    /**
+     * Send mail to BDE and hide reported comment
+     *
+     * @param Request $request
+     * @return string
+     */
     public function report(Request $request) {
 
         //do the fucking change of hide attribute

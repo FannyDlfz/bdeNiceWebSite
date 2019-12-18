@@ -23,14 +23,4 @@ class ArticleRepository extends BaseRepository {
         return Article::all();
     }
 
-    public function sortByOrderedNumber() {
-
-        $articles = Article::all();
-
-        $ordered [$articles->name] = $articles->ordered;
-
-        return sort($ordered);
-
-    }
-
 }
