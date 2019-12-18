@@ -6,7 +6,7 @@ use App\Article;
 
 class ArticleRepository extends BaseRepository {
 
-    protected $article;
+    protected $model;
 
     public function __construct()
     {

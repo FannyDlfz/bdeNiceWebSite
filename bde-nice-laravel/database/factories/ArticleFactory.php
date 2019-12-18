@@ -11,6 +11,7 @@ $factory->define(Article::class, function (Faker $faker) {
         'name'        => $faker->name,
         'price'       => $faker->numberBetween(0,300),
         'description' => $faker->realText(200),
+        'ordered'     => $faker->numberBetween(0,9),
         'selected'    => $faker->boolean(10)
     ];
 });

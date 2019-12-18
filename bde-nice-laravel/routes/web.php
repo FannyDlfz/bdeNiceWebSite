@@ -60,10 +60,12 @@ Route::post('/events/search', 'EventController@search');
 
 Route::get('/legalMention', function() {return view('legalMention');}) ->name('legalMention');
 
-Route::get('event-photos/download', 'EventPhotoController@downloadImage')->name('event-photos.download');
+Route::get('/event-photos/download', 'EventPhotoController@downloadImage')->name('event-photos.download');
 
 Route::get('like/{id}', 'EventController@countLikes');
 Route::get('likeEvent/{id}', 'EventController@likeEvent');
 
 
+Route::post('/comment/validationMessage','EventController@report') ->name('events.report');
+Route::get('/events/{id}/subscribers', 'EventController@getSubUsers') -> name('events.subs');
 

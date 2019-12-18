@@ -30,9 +30,12 @@
                     </p>
                 </div>
 
-                @if($event->scheduled)
+                {{--@if($event->scheduled)--}}
                     @if(strtotime($event->begin_at) > time())
-                        @if(!$is_user_subscribed)
+
+                        @if($userRole == 4 || $userRole == 2)
+                            <a class="buttonevent-article" href="/events/{{ $event->id }}/subscribers">Accéder à la liste des inscrits</a>
+                        @elseif(!$is_user_subscribed)
                             <a class="buttonevent-article" href="/events/{{ $event->id }}/subscribe">Participer</a>
                         @else
                             <a class="buttonevent-article" href="/events/{{ $event->id }}/unsubscribe">Ne plus participer</a>
@@ -40,7 +43,7 @@
                     @elseif($is_user_subscribed)
                         <a class="buttonevent-article" href="/events-photos/create/{{ $event->id }}">Poster un souvenir</a>
                     @endif
-                @endif
+
             </section>
         </section>
 
@@ -58,9 +61,9 @@
                         <section class="event-article-before-container">
                             <a href="{{route('eventPhotos.show', $eventPhoto->id)}}" class="event-article-link">
                                 <img src="{{( preg_match('#^https?:\/\/.*#', $eventPhoto->name)
-                    ? $eventPhoto->name
-                    : asset('/event-photos-users/' . \App\Gestion\SlugGestion::slugify($eventPhoto->name) . '.' . $eventPhoto->extension) )}}"
-                                     alt="{{ $eventPhoto->name }}" class="event-article-picture">
+                                            ? $eventPhoto->name
+                                            : asset('/event-photos-users/' . \App\Gestion\SlugGestion::slugify($eventPhoto->name) . '.' . $eventPhoto->extension) )}}"
+                                     alt="{{ $eventPhoto->name }}" class="event-article-picture" />
                             </a>
 
                             <p class="event-article-post">Posté par {{ $event_photos_users[$eventPhoto->id]->name}}, le {{$eventPhoto->created_at}}</p>
@@ -95,7 +98,9 @@
 
     @foreach($comments as $comment)
 
-        @php($i++);
+        @php($i++)
+
+        @if($comment->hidden == false || ($userRole == 3 && $comment->hidden == true) )
 
         <section class="event-article-commentary">
             <h3 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }}</h3>
@@ -109,7 +114,21 @@
                 <p id="error"></p>
                 <br>
             </div>
+            @if($userRole == 3 && $comment->hidden == false)
+
+                <form action="/comment/validationMessage" method="POST">
+                    {{csrf_field()}}
+
+                    <input type="hidden" value="{{$comment->id}}">
+                    <input class="btn btn-lg btn-filled" type="submit" value="Signaler"/>
+                </form>
+
+            @endif
+            @if($comment->hidden == true && $userRole == 3)<p>le commantaire de {{$comment->user()->name}} a été signalé</p>@endif
         </section>
+        @elseif($comment->hidden == true && $userRole != 3)
+            <p>Désolé, ce commentaire a été censuré</p>
+        @endif
 
     @endforeach
 

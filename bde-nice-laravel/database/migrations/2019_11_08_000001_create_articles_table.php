@@ -18,6 +18,7 @@ class CreateArticlesTable extends Migration
             $table->string('name');
             $table->double('price');
             $table->longText('description');
+            $table->integer('ordered');
             $table->boolean('selected')->default(false);
             $table->timestamps();
         });

@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ArticleRepository;
-use App\Repositories\EventCatRepository;
-use App\Repositories\EventPhotoRepository;
 use App\Repositories\EventRepository;
-use App\Repositories\PictureRepository;
-use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -22,29 +18,54 @@ class AdminController extends Controller
         $this->articleRepository = $articleRepository;
     }
 
+    /**
+     * Display general admin page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('admin.dashboard');
     }
 
+    /**
+     * Display all events on admin page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index_events()
     {
         return view('admin.events.index');
     }
 
+    /**
+     * Fill events with Ajax
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function events_list_ajax()
     {
-        $events = $this->eventRepository->getPaginate(20);
+        $events = $this->eventRepository->getPaginate(self::NB_PER_PAGE);
         $links = $events->render();
 
         return response()->json(compact('links', 'events'));
     }
 
+    /**
+     * Display all articles admin page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index_articles()
     {
         return view('admin.articles.index');
     }
 
+    /**
+     * Fill articles with Ajax
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function articles_list_ajax()
     {
         $articles = $this->articleRepository->getPaginate(20);
