@@ -42,6 +42,10 @@ class EventPhotoController extends Controller {
      */
     public function create($id)
     {
+        if (!session()->has('user')) {
+            return 'Vous devez être connecté pour poster une photo';
+        }
+
         return view('eventPhotos.create', array('event_id' => $id));
     }
 
@@ -53,6 +57,10 @@ class EventPhotoController extends Controller {
      */
     public function store(EventPhotoCreateRequest $request)
     {
+        if (!session()->has('user')) {
+            return 'Vous devez être connecté pour poster une photo';
+        }
+
         $description = $request->input('description');
         $event_id = $request->input('event_id');
         $name = $request->input('name');
@@ -141,6 +149,9 @@ class EventPhotoController extends Controller {
      */
     public function downloadImage()
     {
+        if (!session()->has('user') || session('role') != 3) {
+            return 'Vous devez être connecté et avoir le statut Cesi Staff pour télécharger les photos';
+        }
         $path = public_path('/event-photos-users');
         $fileName = 'img.zip';
 

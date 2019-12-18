@@ -25,6 +25,10 @@ class AdminController extends Controller
      */
     public function index()
     {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
+
         return view('admin.dashboard');
     }
 
@@ -35,6 +39,10 @@ class AdminController extends Controller
      */
     public function index_events()
     {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
+
         return view('admin.events.index');
     }
 
@@ -58,6 +66,10 @@ class AdminController extends Controller
      */
     public function index_articles()
     {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
+
         return view('admin.articles.index');
     }
 

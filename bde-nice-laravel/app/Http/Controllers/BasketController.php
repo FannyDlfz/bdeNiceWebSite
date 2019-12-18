@@ -28,6 +28,10 @@ class BasketController extends Controller
      */
     public function show($id)
     {
+        if (!session()->has('user')) {
+            return 'Vous devez être connecté pour accéder à cette page';
+        }
+
         $basket = $this->commandRepository->getByUserId($id);
         if($basket == null)
             $basket = $this->commandRepository->store(array('submit' => false, 'user_id' => $id));

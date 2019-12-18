@@ -29,6 +29,10 @@ class ArticleCatController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create() {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
+
         return view('articleCategories.creation');
     }
 
@@ -39,6 +43,9 @@ class ArticleCatController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(ArticleCatCreateRequest $request) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $category = $this->articleCatRepository->store($request->all());
 
@@ -53,6 +60,10 @@ class ArticleCatController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
+
         $articleCategory = $this->articleCatRepository->getById($id);
 
         return view('articleCategories.edit', compact('articleCategory'));
@@ -66,7 +77,9 @@ class ArticleCatController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(ArticleCatUpdateRequest $request, $id) {
-
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
         $this->articleCatRepository->update($id, $request->all());
 
         return redirect('/articles/');
@@ -79,6 +92,9 @@ class ArticleCatController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $this->articleCatRepository->destroy($id);
         return redirect('articleCat');

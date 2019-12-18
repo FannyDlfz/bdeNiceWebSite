@@ -15,6 +15,8 @@ class CommentController extends Controller {
     {
         $this->commentRepository = $commentRepository;
 
+        $this->middleware('Auth', ['only' => ['create', 'store']]);
+
     }
 
     /**
@@ -35,6 +37,9 @@ class CommentController extends Controller {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function create() {
+        if (!session()->has('user')) {
+            return 'Vous devez être connecté pour poster un commentaire';
+        }
         return redirect()->back();
     }
 
@@ -46,6 +51,9 @@ class CommentController extends Controller {
      */
     public function store(CommentCreateRequest $request)
     {
+        if (!session()->has('user')) {
+            return 'Vous devez être connecté pour poster un commentaire';
+        }
         $params = $request->all();
         $params['user_id'] = session('user');
 
@@ -101,6 +109,9 @@ class CommentController extends Controller {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $this->commentRepository->destroy($id);
 

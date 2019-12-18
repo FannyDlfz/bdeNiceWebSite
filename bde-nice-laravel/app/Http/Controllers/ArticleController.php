@@ -66,6 +66,9 @@ class ArticleController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create() {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $articleCategories = $this->articleCatRepository->findAll();
         return view('articles.creation', compact('articleCategories'));
@@ -173,6 +176,9 @@ class ArticleController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $articleCategories = $this->articleCatRepository->findAll();
         $article = $this->articleRepository->getById($id);
@@ -188,6 +194,9 @@ class ArticleController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(ArticleUpdateRequest $request, $id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $artCatRepo     = new ArticleCatRepository();
 
@@ -206,6 +215,9 @@ class ArticleController extends Controller {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $this->articleRepository->destroy($id);
 
