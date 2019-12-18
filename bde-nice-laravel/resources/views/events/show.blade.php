@@ -108,13 +108,13 @@
             <section class="{{ 'event-article-commentary-text-' . ($i%2 == 0 ? 'right' : 'left') }}">
                 <p class="comment-flex-area">{{ $comment->text }}</p>
             </section>
-
             <div class="buttons_action">
                 {{ csrf_field() }}
                 <button type="submit" id="likeCount">J'aime (...)</button>
                 <p id="error"></p>
                 <br>
             </div>
+
         </section>
         @else
         <section>Commentaire masqué</section>
