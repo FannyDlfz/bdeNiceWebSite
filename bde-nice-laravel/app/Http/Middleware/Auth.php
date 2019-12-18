@@ -16,7 +16,7 @@ class Auth
     public function handle($request, Closure $next)
     {
         if(!session()->has('user'))
-            return redirect('/login')->withErrors('Vous devez être connecté pour effectuer cette action');
+            return view('users/connect');
 
         return $next($request);
     }

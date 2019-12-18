@@ -51,9 +51,6 @@ class EventController extends Controller {
         $this->userRepository           =   new APIModelRepository('App\User', '/api/users');
         $this->subscriptionRepository   =   $subscriptionRepository;
 
-        $this->middleware('Auth', ['only'=>['store','update','destroy']]);
-        /*$this->middleware('Admin', ['only'=>['update', 'destroy']]);*/
-
     }
 
     /**
@@ -79,6 +76,9 @@ class EventController extends Controller {
      */
     public function subscribe($id)
     {
+        if (!session()->has('user')) {
+            return 'Vous devez être connecté pour participer à un évènement';
+        }
         $this->subscriptionRepository->store(array('user_id' => session('user'), 'event_id' => $id));
         return redirect('events/' . $id);
     }
@@ -102,6 +102,9 @@ class EventController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSubUsers($id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $users = $this->userRepository->findAll();
         $event = $this->eventRepository->getById($id);
@@ -127,6 +130,10 @@ class EventController extends Controller {
      */
     public function create()
     {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
+
         $eventCategories = $this->eventCatRepository->findAll();
 
         return view('events.creation', compact('eventCategories'));
@@ -224,6 +231,9 @@ class EventController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(EventCreateRequest $request) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $event = $this->eventRepository->store(array_merge($request->all(), array('user_id' => session('user'))));
 
@@ -275,8 +285,10 @@ class EventController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
-        //get user for name of comment
         $event = $this->eventRepository->getById($id);
         $eventCategories = $this->eventCatRepository->findAll();
 
@@ -291,6 +303,9 @@ class EventController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(EventUpdateRequest $request, $id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $picture        = new Picture();
         $eventCatRepo   = new EventCatRepository();
@@ -322,6 +337,9 @@ class EventController extends Controller {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id) {
+        if (!session()->has('user') || (session('role') != 4) || session('role') != 2) {
+            return 'Vous devez être connecté et avoir le statut Admin pour accéder à cette page';
+        }
 
         $this->eventRepository->destroy($id);
 
@@ -383,6 +401,9 @@ class EventController extends Controller {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function report(Request $request) {
+        if (!session()->has('user') || session('role') != 3) {
+            return 'Vous devez être connecté et avoir le statut Cesi Staff pour signaler un commentaire';
+        }
 
         //do the fucking change of hide attribute
         $id = $request->input('comment_id');
