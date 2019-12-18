@@ -6,8 +6,6 @@
             {{csrf_field()}}
             <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
 
-            <!-- ================================ AUTOCOMPLETE SEARCH BAR ================================== -->
-
             <div class="input-group search-bar">
                 <input type="search" name="search" placeholder="Rechercher un article" class="form-control" id="article">
                 <span class="input-group-prepend">
@@ -15,49 +13,6 @@
                 </span>
                 <i class='fa fa-search'></i>
             </div>
-
-            <style>
-                * { box-sizing: border-box; }
-                body {
-                    font: 16px Arial;
-                }
-
-                input {
-                    border: 1px solid transparent;
-                    background-color: #f1f1f1;
-                    padding: 10px;
-                    font-size: 16px;
-                }
-                input[type=text] {
-                    background-color: #f1f1f1;
-                    width: 100%;
-                }
-                input[type=submit] {
-                    background-color: DodgerBlue;
-                    color: #fff;
-                }
-                .autocomplete-items {
-                    position: absolute;
-                    border: 1px solid #d4d4d4;
-                    border-bottom: none;
-                    border-top: none;
-                    z-index: 99;
-                    /*position the autocomplete items to be the same width as the container:*/
-                    top: 100%;
-                    left: 0;
-                    right: 0;
-                }
-                .autocomplete-items div {
-                    padding: 10px;
-                    cursor: pointer;
-                    background-color: #fff;
-                    border-bottom: 1px solid #d4d4d4;
-                }
-                .autocomplete-items div:hover {
-                    /*when hovering an item:*/
-                    background-color: #e9e9e9;
-                }
-            </style>
 
             <h1 class="sidebar-title">Domaine...</h1>
 
@@ -93,7 +48,7 @@
     </div>
     <div id="main">
         <div class="orange-bar">
-            <p id="inside-bar" style="margin:30px;">Nos articles</p>
+            <h1 id="inside-bar" style="margin:30px;">Nos articles</h1>
         </div>
     </div>
 
@@ -104,17 +59,7 @@
 
             @foreach($articles as $article)
 
-                @if($i % 3 == 0)
-
-                    @if($i != 0)
-
-        </div>
-
-        @endif
-
         <div class="event-box">
-
-            @endif
 
             <div class="event-container-container">
                 <article class="event-container">
@@ -126,7 +71,7 @@
                                  alt="{{ $article->pictures[0]->name }}" />
                         </div>
 
-                    <p class="eventtitle">{{ $article->name }}</p>
+                    <h2 class="eventtitle">{{ $article->name }}</h2>
                     <p class="text">{{ $article->description }}</p>
                     <a href="/articles/{{$article->id}}" ><p class="buttonevent">En savoir plus</p></a>
                     <div class="d-flex justify-content-center mt-4">
@@ -134,13 +79,13 @@
                             <small class="badge badge-success mx-1">{{ $category->name }}</small>
                         @endforeach
                     </div>
-                    <p class="price">{{$article->price}} €</p>
+                    <h3 class="price">{{$article->price}} €</h3>
                 </article>
                 <div class="event-background"></div>
             </div>
 
             @php $i++ @endphp
-
+        </div>
             @endforeach
 
         </div>
