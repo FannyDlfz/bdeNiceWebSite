@@ -2,7 +2,7 @@
 
 @section('content')
 
-<title>Mentions Légales</title>
+<h1>Mentions Légales</h1>
 <p>
     <strong>Éditeur : Association CESI</strong>
 </p>

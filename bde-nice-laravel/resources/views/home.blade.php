@@ -5,12 +5,12 @@
 
     <div>
         <div class="orange-bar">
-            <p id="inside-bar">Prochainement au BDE...</p>
+            <h1 id="inside-bar-next">Prochainement au BDE...</h1>
         </div>
     </div>
 
     <div role="main">
-        <div id="eventsCarousel" class="carousel slide" data-ride="carousel">
+        <div id="eventsCarousel1" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
 
                 @php
@@ -29,7 +29,7 @@
                                     <div class="event-img">
                                         <img class="image" src="{{ $event->pictures[0]->name }}" alt="{{ $event->pictures[0]->name }}" />
                                     </div>
-                                    <p class="eventtitle">{{$event->name}}</p>
+                                    <h2 class="eventtitle">{{$event->name}}</h2>
                                     <p class="text">{{$event->description}}</p>
                                     <a href="events/{{$event->id}}"><p class="buttonevent">En savoir plus</p></a>
                                 </article>
@@ -45,44 +45,41 @@
         </div>
     </div>
 
-    <a href="{{ route('events.index') }}"><button class="button"><span>Intéressé par d'autres évènements ?</span></button></a>
+    <a class="button" href="{{ route('events.index') }}"><span>Intéressé par d'autres évènements ?</span></a>
 
     <div>
         <div class="orange-bar">
-            <p id="inside-bar">Nos meilleures ventes...</p>
+            <p id="inside-bar-best">Nos meilleures ventes...</p>
         </div>
     </div>
 
 
     <div role="main">
-        <div id="eventsCarousel" class="carousel slide" data-ride="carousel">
+        <div id="eventsCarousel2" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
+                @for($i = 0; $i < 3; $i++)
 
-            </div>
-
-            @for($i = 0; $i < 3; $i++)
-
-                <div class="event-box item {{ $i == 0 ? 'active' : '' }}">
-                    <div class="event-container-container">
-                        <article class="event-container">
-                            <div class="event-img">
-                                <img class="image" src="{{ $ordered[$i]->pictures[0]->name }}" alt="{{ $ordered[$i]->pictures[0]->name }}" />
-                            </div>
-                            <p class="eventtitle">{{$ordered[$i]->name}}</p>
-                            <p class="text">{{$ordered[$i]->description}}</p>
-                            <a href="articles/{{$ordered[$i]->id}}"><p class="buttonevent">En savoir plus</p></a>
-                        </article>
-                        <div class="event-background">{{$ordered[$i]->price }} €</div>
+                    <div class="event-box item {{ $i == 0 ? 'active' : '' }}">
+                        <div class="event-container-container">
+                            <article class="event-container">
+                                <div class="event-img">
+                                    <img class="image" src="{{ $ordered[$i]->pictures[0]->name }}" alt="{{ $ordered[$i]->pictures[0]->name }}" />
+                                </div>
+                                <h2 class="eventtitle">{{$ordered[$i]->name}}</h2>
+                                <p class="text">{{$ordered[$i]->description}}</p>
+                                <a href="articles/{{$ordered[$i]->id}}"><p class="buttonevent">En savoir plus</p></a>
+                            </article>
+                            <div class="event-background">{{$ordered[$i]->price }} €</div>
+                        </div>
                     </div>
-                </div>
 
-            @endfor
-
+                @endfor
+            </div>
         </div>
     </div>
 
     <div class="wrapper-div">
-        <a href="{{ route('articles.index') }}"><button class="button"><span>Intéressé par d'autres produits ?</span></button></a>
+        <a class="button" href="{{ route('articles.index') }}"><span>Intéressé par d'autres produits ?</span></a>
     </div>
 @endsection
 
