@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\Gestion\FileUploadGestion;
 use App\Gestion\SlugGestion;
-use App\Http\Middleware\Auth;
-use App\Http\Resources\EventPhotoResource;
 use App\Like;
 use App\Mail\reportMail;
 use App\Repositories\APIModelRepository;
@@ -31,7 +29,6 @@ class EventController extends Controller {
     const NB_PER_PAGE = 9;
 
     protected $eventRepository;
-
     protected $pictureRepository;
     protected $eventPhotoRepository;
     protected $eventCatRepository;
@@ -54,8 +51,8 @@ class EventController extends Controller {
         $this->userRepository           =   new APIModelRepository('App\User', '/api/users');
         $this->subscriptionRepository   =   $subscriptionRepository;
 
-        /*$this->middleware('Auth', ['only'=>['store','update', 'destroy']]);
-        $this->middleware('Admin', ['only'=>['update', 'destroy']]);*/
+        $this->middleware('Auth', ['only'=>['store','update','destroy']]);
+        /*$this->middleware('Admin', ['only'=>['update', 'destroy']]);*/
 
     }
 
@@ -330,7 +327,7 @@ class EventController extends Controller {
 
         return redirect()->back();
     }
-    /* ======================================================LIKE ========================================*/
+
     /**
      * Creates a like on an event
      *
@@ -355,6 +352,7 @@ class EventController extends Controller {
         }
         return response()->json($code);
     }
+
     /**
      * Return the number of likes for an event
      *
@@ -365,6 +363,7 @@ class EventController extends Controller {
         $likes = Like::where('id_event', $id_event)->get();
         return count($likes);
     }
+
     /**
      * Say if an user has liked a specific event
      *
@@ -381,20 +380,25 @@ class EventController extends Controller {
      * Send mail to BDE and hide reported comment
      *
      * @param Request $request
-     * @return string
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function report(Request $request) {
 
         //do the fucking change of hide attribute
+        $id = $request->input('comment_id');
+        $comment = $this->commentRepository->getById($id);
+
+        $comment->hidden = false;
+        $comment->save();
 
         $users = $this->userRepository->findAll();
 
         foreach ($users as $user) {
-            if ($user->role->_id == 4) {
+            if ($user->role->_id == 4 || $user->role->_id == 2) {
                 Mail::to($user)->send(new reportMail);
             }
         }
-        return 'Signalement effectué';
+        return redirect()->back();
     }
 
 }

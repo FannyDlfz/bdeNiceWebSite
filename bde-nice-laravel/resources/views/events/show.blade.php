@@ -100,10 +100,11 @@
 
         @php($i++)
 
-        @if($comment->hidden == false || ($userRole == 3 && $comment->hidden == true) )
-
+        @if($userRole != 3)
+        @if(!$comment->hidden)
         <section class="event-article-commentary">
             <h3 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }}</h3>
+
             <section class="{{ 'event-article-commentary-text-' . ($i%2 == 0 ? 'right' : 'left') }}">
                 <p class="comment-flex-area">{{ $comment->text }}</p>
             </section>
@@ -114,20 +115,36 @@
                 <p id="error"></p>
                 <br>
             </div>
-            @if($userRole == 3 && $comment->hidden == false)
-
-                <form action="/comment/validationMessage" method="POST">
-                    {{csrf_field()}}
-
-                    <input type="hidden" value="{{$comment->id}}">
-                    <input class="btn btn-lg btn-filled" type="submit" value="Signaler"/>
-                </form>
-
-            @endif
-            @if($comment->hidden == true && $userRole == 3)<p>le commantaire de {{$comment->user()->name}} a été signalé</p>@endif
         </section>
-        @elseif($comment->hidden == true && $userRole != 3)
-            <p>Désolé, ce commentaire a été censuré</p>
+        @else
+        <section>Commentaire masqué</section>
+        @endif
+        @else
+        <section class="event-article-commentary">
+            <h3 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }}</h3>
+
+            <section class="{{ 'event-article-commentary-text-' . ($i%2 == 0 ? 'right' : 'left') }}">
+                <p class="comment-flex-area">{{ $comment->text }}</p>
+            </section>
+
+            <div class="buttons_action">
+                {{ csrf_field() }}
+                <button type="submit" id="likeCount"><i class="fas fa-heart"></i> (...)</button>
+                <p id="error"></p>
+                <br>
+            </div>
+        </section>
+
+        @if($comment->hiden)
+        <p>Commentaire déjà masqué</p>
+        @else
+        <form action="/comment/validationMessage" method="POST">
+            {{csrf_field()}}
+
+            <input type="hidden" value="{{$comment->id}}" name="comment_id">
+            <input class="btn btn-lg btn-filled" type="submit" value="Signaler"/>
+        </form>
+        @endif
         @endif
 
     @endforeach
