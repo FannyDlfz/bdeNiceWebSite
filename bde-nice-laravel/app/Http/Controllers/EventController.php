@@ -7,6 +7,7 @@ use App\Gestion\FileUploadGestion;
 use App\Gestion\SlugGestion;
 use App\Http\Middleware\Auth;
 use App\Http\Resources\EventPhotoResource;
+use App\Mail\reportMail;
 use App\Repositories\APIModelRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\EventRepository;
@@ -26,6 +27,7 @@ use App\Subscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller {
 
@@ -85,6 +87,25 @@ class EventController extends Controller {
     {
         $this->subscriptionRepository->unsubscribe(session('user'), $id);
         return redirect('events/' . $id);
+    }
+
+    public function getSubUsers($id) {
+
+        $users = $this->userRepository->findAll();
+        $event = $this->eventRepository->getById($id);
+
+        $userSub = [];
+        $i=0;
+
+        foreach ($users as $user) {
+            if ($this->subscriptionRepository->is_user_subscribed($user->id, $event->id)) {
+             $userSub[$i] = $user;
+            }
+            $i++;
+        }
+
+        return view('events.subscribers', compact('userSub', 'event'));
+
     }
 
     /**
@@ -219,10 +240,14 @@ class EventController extends Controller {
         foreach($eventPhotos as $photo)
             $event_photos_users[$photo->id] = $this->userRepository->find(array('id' => $photo->user_id));
 
+        $actualUser = session('user');
+        $userRole = session('role');
+
+
         $subscriptions = $this->subscriptionRepository->get_subscriptions($id);
         $is_user_subscribed = $this->subscriptionRepository->is_user_subscribed(session('user'), $id);
 
-        return view('events.show', compact('event','comments', 'subscriptions', 'is_user_subscribed', 'eventPhotos', 'event_photos_users'));
+        return view('events.show', compact('event','comments', 'subscriptions', 'is_user_subscribed', 'eventPhotos', 'event_photos_users','userRole'));
     }
 
     /**
@@ -288,4 +313,19 @@ class EventController extends Controller {
 
         return redirect()->back();
     }
+
+    public function report(Request $request) {
+
+        //do the fucking change of hide attribute
+
+        $users = $this->userRepository->findAll();
+
+        foreach ($users as $user) {
+            if ($user->role->_id == 4) {
+                Mail::to($user)->send(new reportMail);
+            }
+        }
+        return 'Signalement effectué';
+    }
+
 }

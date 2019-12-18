@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->longText('text');
             $table->timestamps();
+            $table->boolean('hidden')->default(false);
 
             $table->bigInteger('article_id')->unsigned()->nullable();
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');

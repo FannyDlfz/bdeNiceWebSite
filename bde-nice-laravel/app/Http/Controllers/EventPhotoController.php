@@ -13,6 +13,7 @@ use App\Repositories\EventPhotoRepository;
 
 use App\Http\Requests\EventPhotoCreateRequest;
 use App\Http\Requests\EventPhotoUpdateRequest;
+use ZipArchive;
 
 class EventPhotoController extends Controller {
 
@@ -138,7 +139,26 @@ class EventPhotoController extends Controller {
 
     public function downloadImage()
     {
-        return response()->download('/event-photos-users');
+        $path = public_path('/event-photos-users');
+        $fileName = 'img.zip';
+
+        $zip = new ZipArchive();
+
+        $success = $zip->open($path . '/' . $fileName, ZipArchive::CREATE);
+
+        if($success === TRUE) {
+            $files = scandir($path);
+            unset($files[0], $files[1]);
+
+            foreach ($files as $file) {
+                $zip->addFile($path . '/' . $file, $file);
+            }
+
+            $zip->close();
+
+            return response()->download($path . '/' . $fileName)->deleteFileAfterSend();
+        }
+
     }
 
 }

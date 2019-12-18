@@ -11,6 +11,7 @@ $factory->define(Comment::class, function (Faker $faker) {
         'article_id'     => $faker->numberBetween(1, 100),
         'event_photo_id' => $faker->numberBetween(1, 200),
         'user_id'        => $faker->numberBetween(1, 5),
-        'event_id'       => $faker->numberBetween(1, 100)
+        'event_id'       => $faker->numberBetween(1, 100),
+        'hidden'         => $faker->boolean
     ];
 });

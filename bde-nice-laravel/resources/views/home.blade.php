@@ -47,44 +47,37 @@
 
     <a href="{{ route('events.index') }}"><button class="button"><span>Intéressé par d'autres évènements ?</span></button></a>
 
+    <div>
+        <div class="orange-bar">
+            <p id="inside-bar">Nos meilleures ventes...</p>
+        </div>
+    </div>
+
+
     <div role="main">
-        <div id="articlesCarousel" class="carousel slide" data-ride="carousel">
-            Wrapper for slides
+        <div id="eventsCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
 
-                @php $i = 0 @endphp
-
-                @foreach($articles as $article)
-
-                    @if($i % 3 == 0)
-
-                        @if($i != 0)
-
             </div>
 
-            @endif
+            @for($i = 0; $i < 3; $i++)
 
-            <div class="event-box item {{ $i == 0 ? 'active' : '' }}">
-
-                @endif
-
-                <div class="event-container-container">
-                    <article class="event-container">
-                        <div class="event-img"> <img class="image"  src="{{ $article->pictures[0]->name }}" alt="{{ $article->pictures[0]->name }}" /></div>
-                        <p class="eventtitle">{{ $article->name }}</p>
-                        <p class="text">{{ $article->description }}</p>
-                        <p class="buttonevent">En savoir plus</p>
-                    </article>
-                    <div class="event-background">{{$article->price }} €</div>
+                <div class="event-box item {{ $i == 0 ? 'active' : '' }}">
+                    <div class="event-container-container">
+                        <article class="event-container">
+                            <div class="event-img">
+                                <img class="image" src="{{ $ordered[$i]->pictures[0]->name }}" alt="{{ $ordered[$i]->pictures[0]->name }}" />
+                            </div>
+                            <p class="eventtitle">{{$ordered[$i]->name}}</p>
+                            <p class="text">{{$ordered[$i]->description}}</p>
+                            <a href="articles/{{$ordered[$i]->id}}"><p class="buttonevent">En savoir plus</p></a>
+                        </article>
+                        <div class="event-background">{{$ordered[$i]->price }} €</div>
+                    </div>
                 </div>
 
-                @php $i++
+            @endfor
 
-                @endphp
-
-                @endforeach
-
-            </div>
         </div>
     </div>
 

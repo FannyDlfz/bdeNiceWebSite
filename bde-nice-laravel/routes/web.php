@@ -46,7 +46,7 @@ Route::get('admin/articles/list', 'AdminController@articles_list_ajax') ->name('
 Route::get('events/{id}/subscribe', 'EventController@subscribe')  ->where(array('id' => '[0-9]+'))->name('events.subscribe');
 Route::get('events/{id}/unsubscribe', 'EventController@unsubscribe')->where(array('id' => '[0-9]+'))->name('events.unsubscribe');
 
-Route::resource('basket', 'BasketController')->only(['show', 'update'])->names('basket');
+Route::resource('basket', 'BasketController')->only(['show', 'update'])->names('basket')->middleware('authUser');
 Route::delete('basket/{id}/remove-article', 'BasketController@removeArticle')->where(array('id' => '[0-9]+'))->name('basket.remove-article');
 Route::get('basket/{id}/submit', 'BasketController@submit')->where(array('id' => '[0-9]+'))->name('basket.submit');
 Route::post('/articles/search', 'ArticleController@search');
@@ -54,6 +54,8 @@ Route::post('/events/search', 'EventController@search');
 
 Route::get('/legalMention', function() {return view('legalMention');}) ->name('legalMention');
 
-Route::get('event-photos/download', 'EventPhotoController@downloadImage')->name('event-photos.download');
+Route::get('/event-photos/download', 'EventPhotoController@downloadImage')->name('event-photos.download');
 
+Route::post('/comment/validationMessage','EventController@report') ->name('events.report');
+Route::get('/events/{id}/subscribers', 'EventController@getSubUsers') -> name('events.subs');
 

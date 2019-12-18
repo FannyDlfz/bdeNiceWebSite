@@ -22,7 +22,6 @@ class CommentController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    //not necessary?
     public function index() {
 
         $comments = $this->commentRepository;

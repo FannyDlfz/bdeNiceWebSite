@@ -30,4 +30,13 @@ class CommentRepository extends BaseRepository {
     {
         return Comment::where('event_photo_id', '=', $id)->orderBy('created_at', 'desc')->get();
     }
+
+    public function hide($id) {
+
+        $comment = $this->getById($id);
+
+        $comment->hidden = true;
+
+        $comment->save();
+    }
 }

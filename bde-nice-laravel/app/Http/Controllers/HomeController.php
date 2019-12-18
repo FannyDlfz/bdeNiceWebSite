@@ -25,10 +25,19 @@ class HomeController extends Controller
     public function index()
     {
         $events   = $this->eventRepository->findAll();
-        $articles = $this->articleRepository->getSelected();
+        $articles = $this->articleRepository->findAll();
 
-        $allArticles = $this->articleRepository->sortByOrderedNumber();
+        $ordered = [];
 
-        return view('home', compact('articles', 'events', 'allArticles'));
+        foreach ($articles as $article) {
+            array_push($ordered, $article);
+        }
+
+        usort($ordered, function($a, $b)
+        {
+            return $a->ordered < $b->ordered;
+        });
+
+        return view('home', compact('articles', 'events','ordered'));
     }
 }

@@ -33,4 +33,5 @@ class CommandRepository extends BaseRepository {
         if($basket != null)
             $basket->articles()->detach($article_id);
     }
+
 }

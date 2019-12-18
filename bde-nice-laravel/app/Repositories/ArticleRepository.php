@@ -6,11 +6,11 @@ use App\Article;
 
 class ArticleRepository extends BaseRepository {
 
-    protected $article;
+    protected $model;
 
     public function __construct(Article $article)
     {
-        $this->article = $article;
+        $this->model = $article;
     }
 
     public function getSelected()
