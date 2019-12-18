@@ -1081,3 +1081,7 @@ tr{
     margin-left: 10px;
     vertical-align: baseline;
 }
+
+.buttons_action{
+    border-radius: 25px;
+}

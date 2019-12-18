@@ -74,15 +74,5 @@ class BasketController extends Controller
         return 'commande validée';
     }
 
-    /*public function submit(Request $request, $id)
-    {
-        $user = $this->userRepository->find(array('id' => $id));
-        $bdeMembers = $this->userRepository->find(array('role_id' => 2));
 
-        Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
-            $m->from('hello@app.com', 'Your Application');
-
-            $m->to($user->email, $user->name)->subject('Your Reminder!');
-        });
-    }*/
 }

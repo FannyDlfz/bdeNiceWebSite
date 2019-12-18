@@ -7,6 +7,7 @@ use App\Gestion\FileUploadGestion;
 use App\Gestion\SlugGestion;
 use App\Http\Middleware\Auth;
 use App\Http\Resources\EventPhotoResource;
+use App\Like;
 use App\Repositories\APIModelRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\EventRepository;
@@ -287,5 +288,51 @@ class EventController extends Controller {
 //        $this->eventCatRepository->destroyRelation($event, $categories);
 
         return redirect()->back();
+    }
+    /* ======================================================LIKE ========================================*/
+    /**
+     * Creates a like on an event
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function likeEvent($id_event, Request $request) {
+        $id_user = session('user');
+        $code = '';
+        if (!isset($id_user)) {
+            $code = '401';
+        } else {
+            if (!self::hasLiked($id_event, $id_user)) {
+                $like = new Like;
+                $like -> id_event = $id_event;
+                $like -> id_user = $id_user;
+                $like -> save();
+                $code = '200';
+            } else {
+                $code = '403';
+            }
+        }
+        return response()->json($code);
+    }
+    /**
+     * Return the number of likes for an event
+     *
+     * @param $id_event
+     * @return int
+     */
+    public function countLikes($id_event) {
+        $likes = Like::where('id_event', $id_event)->get();
+        return count($likes);
+    }
+    /**
+     * Say if an user has liked a specific event
+     *
+     * @param $id_event
+     * @param $id_user
+     * @return bool
+     */
+    public function hasLiked($id_event, $id_user) {
+        $likes = Like::whereRaw('id_event=' . $id_event . ' and id_user=' . $id_user)->get();
+        return count($likes) > 0;
     }
 }

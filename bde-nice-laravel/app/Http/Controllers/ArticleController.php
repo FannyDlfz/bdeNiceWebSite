@@ -16,8 +16,11 @@ use App\Repositories\ArticleCatRepository;
 
 use App\Picture;
 
+use http\Env\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+
 
 
 class ArticleController extends Controller {
@@ -72,26 +75,23 @@ class ArticleController extends Controller {
 
     public function search(Request $request)
     {
-        $articleCategories = $this->articleCatRepository->findAll();
-        $search = $request->input('search');
 
+        $articleCategories = $this->articleCatRepository->findAll();
+
+        $search = $request->input('search');
         $query = Article::where('name', 'LIKE', '%' . $search . '%');
         $i = 0;
 
         $categories = $request->input('categories');
-
-        if(isset($categories))
-            if(is_array($categories))
-                foreach($categories as $category)
-                {
-                    if($i == 0)
-                        $query->whereHas('articleCategories', function($query) use ($category)
-                        {
+        if (isset($categories))
+            if (is_array($categories))
+                foreach ($categories as $category) {
+                    if ($i == 0)
+                        $query->whereHas('articleCategories', function ($query) use ($category) {
                             $query->where('id', '=', $category);
                         });
                     else
-                        $query->orWhereHas('articleCategories', function($query) use ($category)
-                        {
+                        $query->orWhereHas('articleCategories', function ($query) use ($category) {
                             $query->where('id', '=', $category);
                         });
                     $i++;
@@ -99,8 +99,11 @@ class ArticleController extends Controller {
 
         $sort           = $request->input('sort');
         $sort_direction = $request->input('sort-direction');
+
         if(isset($sort) && isset($sort_direction))
             $query->orderBy($request->input('sort'), $request->input('sort-direction'));
+
+
 
         $priceMinimum = $request->input('price-min');
         $priceMaximum = $request->input('price-max');
@@ -203,4 +206,39 @@ class ArticleController extends Controller {
 
         return redirect()->back();
     }
+
+    /**
+     * Redirect to specified article with given name
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function showArticlesName(Request $request) {
+        $name = $request->input('articleName');
+
+        $article = Article::query()->where('name', $name)->get();
+
+        if (!$article) {
+            return $this->index();
+        }
+
+        return redirect("articles/" . $article[0]->id);
+    }
+
+    /**
+     * Get alla articles names
+     *
+     * @return false|string
+     */
+    public function getAll() {
+        $articles = Article::all();
+        $names = [];
+        foreach ($articles as $article) {
+            array_push($names, $article->name);
+        }
+        return json_encode($names);
+
+    }
 }
+
+

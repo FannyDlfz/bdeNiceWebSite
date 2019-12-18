@@ -4,7 +4,8 @@
 
     <div class="image-event-article" style="background-image: url('{{( preg_match('#^https?:\/\/.*#', $event->pictures[0]->name)
             ? $event->pictures[0]->name
-            : asset('/event-photos/' . \App\Gestion\SlugGestion::slugify($event->pictures[0]->name) . '.' . $event->pictures[0]->extension) )}}');">
+            : asset('/event-photos/' . \App\Gestion\SlugGestion::slugify($event->pictures[0]->name) . '.' . $event->pictures[0]->extension) )}}');"
+         xmlns="http://www.w3.org/1999/html">
 
         <section class="section-event-article">
             <h1 class="title-event-article">{{ $event->name }}</h1>
@@ -101,8 +102,12 @@
             <section class="{{ 'event-article-commentary-text-' . ($i%2 == 0 ? 'right' : 'left') }}">
                 <p class="comment-flex-area">{{ $comment->text }}</p>
             </section>
-            <div class="like">
-                <i class="far fa-thumbs-up fa-3x"></i>
+
+            <div class="buttons_action">
+                {{ csrf_field() }}
+                <button type="submit" id="likeCount"><i class="fas fa-heart"></i> (...)</button>
+                <p id="error"></p>
+                <br>
             </div>
         </section>
 
@@ -113,7 +118,8 @@
 @endsection
 
 @section('scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="{{ asset('/js/like.js') }}"></script>
 @endsection

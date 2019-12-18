@@ -23,6 +23,10 @@ Route::get('logout', 'UserController@logout')          ->name('logout');
 Route::post('users/connect', 'UserController@connect') ->name('connection');
 
 Route::get('articles/search', 'ArticleController@search') ->name('articles.search');
+/* ==================== Route API pour autocompletion Articles ===================*/
+Route::get('/api/articles', 'ArticleController@getAll')->name('articles.index');
+Route::get('/articleByName', 'ArticleController@showArticlesName');
+
 Route::get('events/search', 'EventController@search')     ->name('events.search');
 
 Route::get('mails/validationMail', 'BasketController@submit')  ->name('mails.validationMail');
@@ -57,5 +61,9 @@ Route::post('/events/search', 'EventController@search');
 Route::get('/legalMention', function() {return view('legalMention');}) ->name('legalMention');
 
 Route::get('event-photos/download', 'EventPhotoController@downloadImage')->name('event-photos.download');
+
+Route::get('like/{id}', 'EventController@countLikes');
+Route::get('likeEvent/{id}', 'EventController@likeEvent');
+
 
 

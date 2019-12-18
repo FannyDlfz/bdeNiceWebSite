@@ -17,4 +17,8 @@ class ArticleRepository extends BaseRepository {
     {
         return Article::where('selected', 1)->get();
     }
+    public function findAll()
+    {
+        return Article::all();
+    }
 }

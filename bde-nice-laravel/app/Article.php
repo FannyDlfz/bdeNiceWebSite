@@ -11,6 +11,7 @@ class Article extends Model {
     //foreign keys:
 
     //many to many relation
+
     public function commands() {
         return $this->belongsToMany('App\Command', 'articles_cmd');
     }

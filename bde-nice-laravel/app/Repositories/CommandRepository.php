@@ -9,8 +9,8 @@ class CommandRepository extends BaseRepository {
 
     protected $command;
 
-    public function __construct(Command $command) {
-        $this->model = $command;
+    public function __construct() {
+        $this->model = new Command;
     }
 
     public function getByUserId($id)
@@ -32,5 +32,9 @@ class CommandRepository extends BaseRepository {
         $basket = $this->getByUserId($user_id);
         if($basket != null)
             $basket->articles()->detach($article_id);
+    }
+    public function findAll()
+    {
+        return Command::all();
     }
 }
