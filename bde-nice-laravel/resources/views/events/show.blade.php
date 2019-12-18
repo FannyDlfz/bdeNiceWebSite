@@ -103,7 +103,7 @@
         @if($userRole != 3)
         @if(!$comment->hidden)
         <section class="event-article-commentary">
-            <h3 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }}</h3>
+            <h3 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }} and {{$comment->hidden}}</h3>
 
             <section class="{{ 'event-article-commentary-text-' . ($i%2 == 0 ? 'right' : 'left') }}">
                 <p class="comment-flex-area">{{ $comment->text }}</p>
@@ -121,7 +121,7 @@
         @endif
         @else
         <section class="event-article-commentary">
-            <h3 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }}</h3>
+            <h3 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }} and and {{$comment->hidden}}</h3>
 
             <section class="{{ 'event-article-commentary-text-' . ($i%2 == 0 ? 'right' : 'left') }}">
                 <p class="comment-flex-area">{{ $comment->text }}</p>

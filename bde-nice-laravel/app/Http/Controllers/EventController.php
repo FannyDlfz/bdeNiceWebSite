@@ -388,7 +388,7 @@ class EventController extends Controller {
         $id = $request->input('comment_id');
         $comment = $this->commentRepository->getById($id);
 
-        $comment->hidden = false;
+        $comment->hidden = true;
         $comment->save();
 
         $users = $this->userRepository->findAll();
