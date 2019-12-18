@@ -111,7 +111,7 @@
 
             <div class="buttons_action">
                 {{ csrf_field() }}
-                <button type="submit" id="likeCount"><i class="fas fa-heart"></i> (...)</button>
+                <button type="submit" id="likeCount">J'aime (...)</button>
                 <p id="error"></p>
                 <br>
             </div>
@@ -127,12 +127,6 @@
                 <p class="comment-flex-area">{{ $comment->text }}</p>
             </section>
 
-            <div class="buttons_action">
-                {{ csrf_field() }}
-                <button type="submit" id="likeCount"><i class="fas fa-heart"></i> (...)</button>
-                <p id="error"></p>
-                <br>
-            </div>
         </section>
 
         @if($comment->hiden)

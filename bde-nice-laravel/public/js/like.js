@@ -6,7 +6,9 @@ let baseUrl = 'http://localhost:8080/';
 let element = document.getElementById("likeCount");
 let error = document.getElementById("error");
 
+
 function updateLikes() {
+
     element.innerText = "J'aime (Chargement...)";
 
     fetch(baseUrl + 'like/' + id)
