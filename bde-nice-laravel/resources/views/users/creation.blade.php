@@ -52,7 +52,7 @@
         <br/>
         <br/>
         <input class="btn btn-lg btn-filled" type="submit" value="S'inscrire"/>
-        <a href="{{ route('home') }}"><button type="button" class="btn btn-lg btn-danger">Revenir à l'accueil</button></a>
+        <a href="{{ route('home') }}" class="btn btn-lg btn-danger">Revenir à l'accueil</a>
     </form>
 
 @endsection

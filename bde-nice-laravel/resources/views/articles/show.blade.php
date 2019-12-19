@@ -26,7 +26,7 @@
                     </form>
 
                 @endif
-                <a href="{{route('articles.index')}}"><button class="button-shop">Retour à la liste</button></a>
+                <a class="button-shop" href="{{route('articles.index')}}">Retour à la liste</a>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
             @php($i++);
 
             <section class="event-article-commentary">
-                <h3 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }}</h3>
+                <h2 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }}</h2>
                 <section class="{{ 'event-article-commentary-text-' . ($i%2 == 0 ? 'right' : 'left') }}">
                     <p class="comment-flex-area">{{ $comment->text }}</p>
                 </section>

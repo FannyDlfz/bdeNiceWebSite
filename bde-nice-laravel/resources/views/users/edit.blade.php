@@ -24,16 +24,14 @@
             <select class="form-control" id="form-center" name="center">
 
                 @foreach($centers as $center)
-
-                    <option value="{{ $center->id }}" selected="{{ ($user->center->{'_id'} == $center->id ? 'selected' : 'none') }}">{{ $center->name }}</option>
-
+                            <option value="{{ $center->id }}" selected="{{ ($user->center->{'_id'} == $center->id ? 'selected' : 'none') }}">{{ $center->name }}</option>
                 @endforeach
 
             </select>
         </div>
         <br/>
         <input class="btn btn-lg btn-filled" type="submit" value="S'inscrire"/>
-        <a href="{{ route('home') }}"><button type="button" class="btn btn-lg btn-danger">Revenir à l'accueil</button></a>
+        <a href="{{ route('home') }}" class="btn btn-lg btn-danger">Revenir à l'accueil</a>
     </form>
 
 @endsection

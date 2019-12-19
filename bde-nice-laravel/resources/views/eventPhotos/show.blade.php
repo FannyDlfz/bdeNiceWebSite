@@ -4,7 +4,7 @@
 
     <div class="picture-container">
 
-        <img src="{{ $eventPhoto->name }}" class="picture-picture">
+        <img src="{{ $eventPhoto->name }}" class="picture-picture" alt="{{ $eventPhoto->name }}">
         <section class="picture-section">
             <h2 class="picture-title">Posté par {{ $user->name }} , <br>le {{ $eventPhoto->created_at }}</h2>
             <p class="picture-text">{{ $eventPhoto->description }}</p>

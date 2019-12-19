@@ -12,10 +12,12 @@
     <div class="table">
         <table class="table-elements">
             <thead class="table-top">
-            <th>Nom du Produit</th>
-            <th>Prix</th>
-            <th>Quantité</th>
-            <th></th>
+            <tr>
+                <th>Nom du Produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
                 @foreach($basket->articles as $article)
@@ -39,7 +41,7 @@
         </table>
     </div>
     <p>
-        <a href="{{route('mails.validationMail')}}"><button class="button-event-basket  ">Acheter</button></a>
+        <a href="{{route('mails.validationMail')}}" class="button-event-basket">Acheter</a>
     </p>
 @endsection
 
