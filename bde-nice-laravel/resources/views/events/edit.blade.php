@@ -4,7 +4,7 @@
 
     <div id="main">
         <div class="orange_bar">
-            <p id="inside_bar" style="margin:30px;">Modifiez votre évènement</p>
+            <h3 id="inside_bar" style="margin:30px;">Modifiez votre évènement</h3>
         </div>
     </div>
 

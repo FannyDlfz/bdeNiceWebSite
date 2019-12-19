@@ -5,7 +5,7 @@
     <div class="image-event-article" style="background-image: url('{{( preg_match('#^https?:\/\/.*#', $event->pictures[0]->name)
             ? $event->pictures[0]->name
             : asset('/event-photos/' . \App\Gestion\SlugGestion::slugify($event->pictures[0]->name) . '.' . $event->pictures[0]->extension) )}}');"
-         xmlns="http://www.w3.org/1999/html">
+         xmlns="http://www.w3.org/1999/xhtml">
 
         <section class="section-event-article">
             <h1 class="title-event-article">{{ $event->name }}</h1>
@@ -16,8 +16,8 @@
             <h2 class="event-date-title">{{ $event->begin_at }} </h2>
             <section class="event-date-text">
                 <div class="event-date-text-text">
-                    <p><i class="fas fa-dollar-sign fa-3x"></i>{{$event->price}}</p>
-                    <p><i class="fas fa-user-ninja fa-3x"></i>{{ count($subscriptions) }}
+                    <h2><i class="fas fa-dollar-sign fa-3x"></i>{{$event->price}}</h2>
+                    <h3><i class="fas fa-user-ninja fa-3x"></i>{{ count($subscriptions) }}
                         @if($event->scheduled)
 
                             @if(strtotime($event->begin_at) > time())
@@ -27,7 +27,7 @@
                             @endif
 
                         @endif
-                    </p>
+                    </h3>
                 </div>
 
                 {{--@if($event->scheduled)--}}
@@ -66,7 +66,7 @@
                                      alt="{{ $eventPhoto->name }}" class="event-article-picture" />
                             </a>
 
-                            <p class="event-article-post">Posté par {{ $event_photos_users[$eventPhoto->id]->name}}, le {{$eventPhoto->created_at}}</p>
+                            <h4 class="event-article-post">Posté par {{ $event_photos_users[$eventPhoto->id]->name}}, le {{$eventPhoto->created_at}}</h4>
 
                             <div class="like3">
                                 <i class="far fa-thumbs-up fa-3x"></i>
@@ -106,12 +106,12 @@
             <h3 class="{{ 'event-article-commentary-title-' . ($i%2 == 0 ? 'right' : 'left') }}">{{ $comment->user()->name }} and {{$comment->hidden}}</h3>
 
             <section class="{{ 'event-article-commentary-text-' . ($i%2 == 0 ? 'right' : 'left') }}">
-                <p class="comment-flex-area">{{ $comment->text }}</p>
+                <h3 class="comment-flex-area">{{ $comment->text }}</h3>
             </section>
             <div class="buttons_action">
                 {{ csrf_field() }}
                 <button type="submit" id="likeCount">J'aime (...)</button>
-                <p id="error"></p>
+                <h3 id="error"></h3>
                 <br>
             </div>
 
@@ -130,7 +130,7 @@
         </section>
 
         @if($comment->hiden)
-        <p>Commentaire déjà masqué</p>
+        <h4>Commentaire déjà masqué</h4>
         @else
         <form action="/comment/validationMessage" method="POST">
             {{csrf_field()}}

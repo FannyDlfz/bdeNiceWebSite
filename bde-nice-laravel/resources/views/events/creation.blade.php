@@ -4,7 +4,7 @@
 
     <div id="main">
         <div class="orange_bar">
-            <p id="inside_bar" style="margin:30px;">Créez votre propre évènement</p>
+            <h2 id="inside_bar" style="margin:30px;">Créez votre propre évènement</h2>
         </div>
     </div>
 

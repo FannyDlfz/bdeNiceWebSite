@@ -90,8 +90,8 @@
             : asset('/event-photos/' . \App\Gestion\SlugGestion::slugify($event->pictures[0]->name) . '.' . $event->pictures[0]->extension) )}}"
                             alt="{{ $event->pictures[0]->name }}" />
                         </div>
-                        <p class="eventtitle">{{ $event->name }}</p>
-                        <p class="text">{{ $event->description }}</p>
+                        <h2 class="eventtitle">{{ $event->name }}</h2>
+                        <h3 class="text">{{ $event->description }}</h3>
                         <a href="/events/{{$event->id}}" ><p class="buttonevent">En savoir plus</p></a>
                         <div class="d-flex justify-content-center mt-4">
                             @foreach($event->eventCategories as $category)
@@ -109,6 +109,7 @@
                 @php $i++ @endphp
 
             @endforeach
+        </div>
 
         </div>
     </section>
