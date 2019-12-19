@@ -7,7 +7,7 @@
 
         {!! $errors->first('text', '<p class="alert alert-danger">:message</p>') !!}
         <div class="input-group">
-            <label id="form-commentaire" class="input-group-addon comment-label" for="form-commentaire">Commentaire</label>
+            <label id="form-comment" class="input-group-addon comment-label" for="form-commentaire">Commentaire</label>
             <textarea id="form-commentaire" class="form-control comment-area" name="text" required></textarea>
         </div>
         <br/>

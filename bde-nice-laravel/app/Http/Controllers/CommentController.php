@@ -14,9 +14,6 @@ class CommentController extends Controller {
     public function __construct(CommentRepository $commentRepository)
     {
         $this->commentRepository = $commentRepository;
-
-        $this->middleware('Auth', ['only' => ['create', 'store']]);
-
     }
 
     /**
